@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 * 本の一覧表示(books.blade.php)
 */
 Route::get('/', function () {
-    return view('welcome');
+    return view('books');
 });
 
 /**
