@@ -26,7 +26,18 @@ Route::get('/', function () {
 * 本を追加
 */
 Route::post('/books', function (Request $request) {
-    //
+    dd($request);
+    // バリデーション
+    $validator = Validator::make($request->all(),[
+        'item_name' => 'required|max:255',
+    ]);
+
+    // バリデーションエラー
+    if ($validator->fails()) {
+        return redirect('/')
+        ->withInput()
+        ->withErrors($validator);
+    }
 });
 
 /**
