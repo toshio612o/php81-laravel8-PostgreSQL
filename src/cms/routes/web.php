@@ -38,6 +38,15 @@ Route::post('/books', function (Request $request) {
         ->withInput()
         ->withErrors($validator);
     }
+
+    // Eloquent モデル（登録処理）
+    $books = new Book;
+    $books->item_name = $request->item_name;
+    $books->item_number = '1';
+    $books->item_amount = '1000';
+    $books->published = '2021-01-07 00:00:00';
+    $bookd->save();
+    return redirect('/');
 });
 
 /**
