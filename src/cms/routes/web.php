@@ -40,7 +40,7 @@ Route::delete('/book/{book}','App\Http\Controllers\BooksController@delete');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'App\Http\Controllers\BooksController@index');
 
 
 Auth::routes();

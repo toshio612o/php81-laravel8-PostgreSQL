@@ -9,8 +9,13 @@ use Auth;
 
 class BooksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request){
-        $books = Book::orderBy('created_at', 'asc')->paginate(3);
+        $books = Book::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
         return view('books', [
             'books' => $books
         ]);
@@ -33,7 +38,7 @@ class BooksController extends Controller
         }
 
         //データ更新
-        $books = Book::find($request->id);
+        $books = Book::where('user_id',Auth::user()->id)->find($request->id);
         $books->item_name   = $request->item_name;
         $books->item_number = $request->item_number;
         $books->item_amount = $request->item_amount;
@@ -43,10 +48,11 @@ class BooksController extends Controller
     }
 
 
-    public function edit(Book $books)
+    public function edit(Book $book_id)
     {
+        $books = Book::where('user_id', Auth::user()->id)->find($book_id);
         //{books}id 値を取得 => Book $books id 値の1レコード取得
-        return view('booksedit', ['book' => $books]);
+        return view('booksedit', ['book' => $book_id]);
     }
 
     public function store(Request $request)
@@ -66,6 +72,7 @@ class BooksController extends Controller
         }
         // Eloquentモデル（登録処理）
         $books = new Book;
+        $books->user_id = Auth::user()->id;
         $books->item_name =    $request->item_name;
         $books->item_number =  $request->item_number;
         $books->item_amount =  $request->item_amount;
