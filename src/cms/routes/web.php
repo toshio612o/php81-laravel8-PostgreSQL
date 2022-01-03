@@ -27,10 +27,7 @@ Route::get('/', 'App\Http\Controllers\BooksController@index');
 Route::post('/books', 'App\Http\Controllers\BooksController@store');
 
 //更新画面
-Route::post('/booksedit/{books}', function (Book $books) {
-    //{books}id 値を取得 => Book $books id 値の1レコード取得
-    return view('booksedit', ['book' => $books]);
-});
+Route::post('/booksedit/{books}', 'App\Http\Controllers\BooksController@edit');
 
 //更新処理
 Route::post('/books/update','App\Http\Controllers\BooksController@update');
@@ -38,10 +35,7 @@ Route::post('/books/update','App\Http\Controllers\BooksController@update');
 /**
 * 本を削除
 */
-Route::delete('/book/{book}', function (Book $book) {
-    $book->delete();
-    return redirect('/');
-});
+Route::delete('/book/{book}','App\Http\Controllers\BooksController@delete');
 
 
 Auth::routes();

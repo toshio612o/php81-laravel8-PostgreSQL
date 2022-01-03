@@ -42,6 +42,13 @@ class BooksController extends Controller
         return redirect('/');
     }
 
+
+    public function edit(Book $books)
+    {
+        //{books}id 値を取得 => Book $books id 値の1レコード取得
+        return view('booksedit', ['book' => $books]);
+    }
+
     public function store(Request $request)
     {
         //バリデーション
@@ -64,6 +71,13 @@ class BooksController extends Controller
         $books->item_amount =  $request->item_amount;
         $books->published =    $request->published;
         $books->save();
+        return redirect('/');
+    }
+
+
+    public function delete(Book $book)
+    {
+        $book->delete();
         return redirect('/');
     }
 }
