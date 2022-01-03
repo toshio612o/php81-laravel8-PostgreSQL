@@ -30,29 +30,7 @@ Route::get('/', function () {
 /**
  * 本を登録
  */
-Route::post('/books', function (Request $request) {
-    //バリデーション
-    $validator = Validator::make($request->all(), [
-        'item_name' => 'required|min:3|max:255',
-        'item_number' => 'required | min:1 | max:3',
-        'item_amount' => 'required | max:6',
-        'published'   => 'required',
-    ]);
-    //バリデーション:エラー
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-    // Eloquentモデル（登録処理）
-    $books = new Book;
-    $books->item_name =    $request->item_name;
-    $books->item_number =  $request->item_number;
-    $books->item_amount =  $request->item_amount;
-    $books->published =    $request->published;
-    $books->save();
-    return redirect('/');
-});
+Route::post('/books', 'App\Http\Controllers\BooksController@store');
 
 //更新画面
 Route::post('/booksedit/{books}', function (Book $books) {
@@ -61,7 +39,7 @@ Route::post('/booksedit/{books}', function (Book $books) {
 });
 
 //更新処理
-Route::post('/books/update','BooksController@update');
+Route::post('/books/update','App\Http\Controllers\BooksController@update');
 
 /**
 * 本を削除
