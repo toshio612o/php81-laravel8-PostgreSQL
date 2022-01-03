@@ -9,6 +9,13 @@ use Auth;
 
 class BooksController extends Controller
 {
+    public function index(Request $request){
+        $books = Book::orderBy('created_at', 'asc')->get();
+        return view('books', [
+            'books' => $books
+        ]);
+    }
+
     public function update(Request $request){
         //バリデーション
         $validator = Validator::make($request->all(), [
