@@ -47,6 +47,11 @@
         </div>
     </form>
 </div>
+@if(session('message'))
+<div class="alert alert-success">
+    {{ session('message') }}
+</div>
+@endif
 <!-- 現在の本 -->
 @if (count($books) > 0)
 <div class="card-body">
