@@ -11,7 +11,7 @@
 |
 */
 
-use App\Book;
+use App\MOdels\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +19,14 @@ use Illuminate\Support\Facades\Route;
 * 本の一覧表示(books.blade.php)
 */
 Route::get('/', function () {
-    return view('books');
+    $books = Book::orderBy('created_at','asc')->get();
+    return view('books',['books' => $books]);
 });
 
 /**
 * 本を追加
 */
 Route::post('/books', function (Request $request) {
-    dd($request);
     // バリデーション
     $validator = Validator::make($request->all(),[
         'item_name' => 'required|max:255',
@@ -45,7 +45,7 @@ Route::post('/books', function (Request $request) {
     $books->item_number = '1';
     $books->item_amount = '1000';
     $books->published = '2021-01-07 00:00:00';
-    $bookd->save();
+    $books->save();
     return redirect('/');
 });
 
