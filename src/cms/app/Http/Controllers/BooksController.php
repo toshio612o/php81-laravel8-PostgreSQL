@@ -52,7 +52,7 @@ class BooksController extends Controller
     {
         $books = Book::where('user_id', Auth::user()->id)->find($book_id);
         //{books}id 値を取得 => Book $books id 値の1レコード取得
-        return view('booksedit', ['book' => $books]);
+        return view('booksedit', ['book' => $book_id]);
     }
 
     public function store(Request $request)
